@@ -1,0 +1,9 @@
+/* GLOBAL FONT */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* CUSTOM SHADOW */
+.shadow-card {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}

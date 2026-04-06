@@ -185,3 +185,55 @@
     opacity: 1;
     transform: translateX(5px);
 }
+.hidden {
+    display: none;
+}
+
+/* Para sa scrollbar ng chat */
+#chat-messages::-webkit-scrollbar {
+    width: 4px;
+}
+#chat-messages::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+}
+.lux-btn, .lux-btn-outline {
+    display: inline-block; /* Idagdag mo 'to para gumana nang tama ang transform at padding */
+    text-align: center;
+    cursor: pointer;
+}
+
+/* LUX CHAT UI */
+#chat-container {
+    backdrop-filter: blur(16px); /* Para sa glass effect */
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid rgba(197, 165, 114, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chat-bubble-user {
+    background: rgba(197, 165, 114, 0.15);
+    color: #C5A572;
+    border: 1px solid rgba(197, 165, 114, 0.2);
+    border-radius: 12px 12px 0 12px;
+}
+
+.chat-bubble-ai {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e5e5e5;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px 12px 12px 0;
+}
+
+.lux-float-btn {
+    z-index: 999;
+    cursor: pointer;
+}
+
+/* Para sa mobile, baka masyadong malaki ang 36px na title */
+@media (max-width: 768px) {
+    .lux-section-title {
+        font-size: 28px;
+    }
+}

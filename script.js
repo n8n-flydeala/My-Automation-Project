@@ -2,14 +2,17 @@ console.log("Luxury Mode Loaded — Young Isis Grrrt!");
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // HERO FADE-IN EFFECT
-    document.querySelector(".hero-fade").style.opacity = 0;
-    setTimeout(() => {
-        document.querySelector(".hero-fade").style.transition = "1.4s";
-        document.querySelector(".hero-fade").style.opacity = 1;
-    }, 200);
+    // 1. HERO FADE-IN EFFECT
+    const hero = document.querySelector(".hero-fade");
+    if (hero) {
+        hero.style.opacity = 0;
+        setTimeout(() => {
+            hero.style.transition = "1.4s";
+            hero.style.opacity = 1;
+        }, 200);
+    }
 
-    // SERVICE REVEAL
+    // 2. SERVICE REVEAL (INTERSECTION OBSERVER)
     const cards = document.querySelectorAll('.lux-service-card');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => {
@@ -27,30 +30,78 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(card);
     });
 
-    // CONTACT FORM WEBHOOK
+    // 3. CHAT UI LOGIC (PINAGSAMA NA NATIN)
+    const chatContainer = document.getElementById('chat-container');
+    const closeBtn = document.getElementById('close-chat');
+    const sendBtn = document.getElementById('send-btn');
+    const userInput = document.getElementById('user-input');
+    const chatMessages = document.getElementById('chat-messages');
+    
+    // Ito yung selector para sa "Ask My AI" button mo
+    const askBtn = document.querySelector('.lux-float-btn') || document.querySelector('button.fixed.bottom-10');
+
+    if (askBtn && chatContainer) {
+        askBtn.addEventListener('click', () => {
+            console.log("Chat Opened! ✦");
+            chatContainer.classList.toggle('hidden');
+        });
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            chatContainer.classList.add('hidden');
+        });
+    }
+
+    // 4. SEND MESSAGE LOGIC
+    if (sendBtn) {
+        sendBtn.addEventListener('click', () => {
+            const message = userInput.value.trim();
+            if (message) {
+                appendMessage('User', message);
+                userInput.value = '';
+                
+                // Temporary AI Thinking state
+                setTimeout(() => {
+                    appendMessage('AI', 'Thinking... (n8n connection soon!)');
+                }, 500);
+            }
+        });
+    }
+
+    function appendMessage(sender, text) {
+        const msgDiv = document.createElement('div');
+        // Ginamit natin yung class na ginawa natin sa CSS kanina
+        msgDiv.className = sender === 'User' ? 'chat-bubble-user p-2 mb-2 ml-auto max-w-[80%]' : 'chat-bubble-ai p-2 mb-2 mr-auto max-w-[80%]';
+        msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // 5. CONTACT FORM WEBHOOK
     const form = document.getElementById("contactForm");
+    if (form) {
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+            const data = {
+                name: form.name.value,
+                email: form.email.value,
+                message: form.message.value
+            };
 
-    form.addEventListener("submit", async e => {
-        e.preventDefault();
-
-        const data = {
-            name: form.name.value,
-            email: form.email.value,
-            message: form.message.value
-        };
-
-        try {
-            await fetch("YOUR_WEBHOOK_URL", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
-
-            alert("Message sent successfully ✦");
-            form.reset();
-        } catch (err) {
-            alert("Something went wrong.");
-            console.error(err);
-        }
-    });
+            try {
+                // Palitan mo 'to ng n8n Webhook URL mo soon
+                await fetch("YOUR_WEBHOOK_URL", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+                alert("Message sent successfully ✦");
+                form.reset();
+            } catch (err) {
+                alert("Naka-test mode pa tayo, G! Connect muna natin n8n.");
+                console.error(err);
+            }
+        });
+    }
 });

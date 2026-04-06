@@ -142,3 +142,46 @@
     color: #C5A572;
     text-shadow: 0 0 20px rgba(197,165,114,0.15);
 }
+/* PORTFOLIO CARDS */
+.lux-portfolio-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 28px;
+    border-radius: 20px;
+    text-align: left;
+    transition: 0.35s;
+    position: relative;
+    overflow: hidden;
+}
+
+.lux-portfolio-card:hover {
+    border-color: #C5A572;
+    background: rgba(197,165,114,0.06);
+    transform: translateY(-6px);
+}
+
+.lux-portfolio-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #C5A572;
+}
+
+.lux-portfolio-text {
+    font-size: 14px;
+    color: #d1d1d1;
+    margin-top: 6px;
+}
+
+.lux-portfolio-arrow {
+    position: absolute;
+    right: 22px;
+    bottom: 20px;
+    font-size: 22px;
+    opacity: 0.3;
+    transition: 0.35s;
+}
+
+.lux-portfolio-card:hover .lux-portfolio-arrow {
+    opacity: 1;
+    transform: translateX(5px);
+}

@@ -105,3 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+async function askCendrickAI(userQuestion) {
+    const response = await fetch('https://flydeala.app.n8n.cloud/webhook-test/ask-ai', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            question: userQuestion
+        }),
+    });
+
+    const data = await response.json();
+    return data.output; // Ito yung sagot ni Groq
+}

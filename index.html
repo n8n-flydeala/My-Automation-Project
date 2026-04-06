@@ -7,113 +7,125 @@
   <!-- TAILWIND CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- CUSTOM CSS -->
-  <link rel="stylesheet" href="style.css" />
+  <title>Young Isis — Automation & AI Systems</title>
 
-  <title>My Automation Project</title>
+  <style>
+    /* Smooth fade animation */
+    .fade-in {
+      animation: fadeIn 1.5s ease-in-out forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-black text-gray-200 tracking-wide">
 
-  <!-- ===== HERO SECTION ===== -->
-  <header class="h-screen flex flex-col justify-center items-center text-center px-6">
-    <h1 class="text-4xl md:text-6xl font-bold mb-4">
-      Your Automation Partner 🚀
+  <!-- ===== HERO ===== -->
+  <header class="h-screen flex flex-col justify-center items-center text-center px-6 fade-in">
+
+    <h1 class="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-yellow-500 to-yellow-200 text-transparent bg-clip-text">
+      Premium Automation Systems
     </h1>
-    <p class="text-lg md:text-xl text-gray-600 max-w-2xl">
-      I create automated workflows, landing pages, and AI-powered solutions.
+
+    <p class="text-lg md:text-2xl max-w-3xl text-gray-400 leading-relaxed">
+      I build high-performance automation workflows, AI agents, and digital systems
+      designed for scale, speed, and profit.
     </p>
 
-    <a href="#services" 
-       class="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition">
-      See Services
+    <a 
+      href="#services"
+      class="mt-10 px-10 py-4 text-lg bg-gradient-to-r from-yellow-500 to-yellow-300 
+             text-black font-bold rounded-xl shadow-[0_0_20px_rgba(255,215,0,0.5)]
+             hover:shadow-[0_0_35px_rgba(255,215,0,0.8)] transition-all">
+      Explore Services
     </a>
+
   </header>
 
-  <!-- ===== SERVICES SECTION ===== -->
-  <section id="services" class="py-20 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">My Services</h2>
 
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="p-8 bg-white shadow-card rounded-xl text-center">
-        <h3 class="text-xl font-semibold mb-2">Automation Workflows</h3>
-        <p class="text-gray-600">n8n, Zapier, Make, and AI workflow setups.</p>
-      </div>
+  <!-- ===== SERVICES ===== -->
+  <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
 
-      <div class="p-8 bg-white shadow-card rounded-xl text-center">
-        <h3 class="text-xl font-semibold mb-2">Landing Pages</h3>
-        <p class="text-gray-600">HTML, CSS, Tailwind, and frontend builds.</p>
-      </div>
+  <div class="p-10 bg-gradient-to-br from-gray-900 to-black border border-gray-800 
+              rounded-2xl shadow-xl hover:scale-105 transition fade-in service-card">
+    <h3 class="text-2xl font-semibold text-yellow-300 mb-3">Automation Workflows</h3>
+    <p class="text-gray-400">n8n, Make, Zapier, API integrations, backend automations.</p>
+  </div>
 
-      <div class="p-8 bg-white shadow-card rounded-xl text-center">
-        <h3 class="text-xl font-semibold mb-2">AI Assistants</h3>
-        <p class="text-gray-600">Custom AI bots and automation agents.</p>
-      </div>
+  <div class="p-10 bg-gradient-to-br from-gray-900 to-black border border-gray-800 
+              rounded-2xl shadow-xl hover:scale-105 transition fade-in delay-75 service-card">
+    <h3 class="text-2xl font-semibold text-yellow-300 mb-3">Landing Pages</h3>
+    <p class="text-gray-400">High-performance frontend builds with Tailwind & custom JS.</p>
+  </div>
+
+  <div class="p-10 bg-gradient-to-br from-gray-900 to-black border border-gray-800 
+              rounded-2xl shadow-xl hover:scale-105 transition fade-in delay-150 service-card">
+    <h3 class="text-2xl font-semibold text-yellow-300 mb-3">AI Assistants</h3>
+    <p class="text-gray-400">Custom GPTs, AI bots, automation agents with real-world logic.</p>
+  </div>
+
+</div>
+  </section>
+
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="py-24 px-6 bg-black border-t border-gray-800">
+    <h2 class="text-4xl font-bold text-center mb-14 text-yellow-400">Work With Me</h2>
+
+    <div class="max-w-xl mx-auto">
+      <form id="contactForm" class="space-y-6 bg-gray-900/40 backdrop-blur-xl 
+                                   p-10 border border-gray-700 rounded-2xl shadow-lg fade-in">
+
+        <!-- NAME -->
+        <div>
+          <label class="text-gray-300 mb-2 block">Name</label>
+          <input 
+            type="text" id="name" name="name"
+            class="w-full bg-black/40 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 
+                   focus:ring-2 focus:ring-yellow-400 outline-none"
+            placeholder="Your full name" required />
+        </div>
+
+        <!-- EMAIL -->
+        <div>
+          <label class="text-gray-300 mb-2 block">Email</label>
+          <input 
+            type="email" id="email" name="email"
+            class="w-full bg-black/40 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 
+                   focus:ring-2 focus:ring-yellow-400 outline-none"
+            placeholder="you@example.com" required />
+        </div>
+
+        <!-- MESSAGE -->
+        <div>
+          <label class="text-gray-300 mb-2 block">Message</label>
+          <textarea 
+            id="message" name="message" rows="5"
+            class="w-full bg-black/40 border border-gray-700 rounded-lg px-4 py-3 text-gray-200
+                   focus:ring-2 focus:ring-yellow-400 outline-none"
+            placeholder="Tell me what you need built..." required></textarea>
+        </div>
+
+        <!-- BUTTON -->
+        <button 
+          type="submit"
+          class="w-full py-4 font-bold bg-gradient-to-r from-yellow-500 to-yellow-300 
+                 text-black rounded-lg hover:opacity-90 shadow-[0_0_25px_rgba(255,215,0,0.7)] transition">
+          Send Message
+        </button>
+      </form>
     </div>
   </section>
 
+
   <!-- ===== FOOTER ===== -->
-  <footer class="py-8 text-center text-gray-500">
-    © 2026 My Automation Project — Powered by Fly Deala Enterprise
+  <footer class="py-8 text-center text-gray-500 border-t border-gray-800">
+    © 2026 Young Isis — Premium Automation Systems
   </footer>
 
-  <!-- JS FILE -->
-  <script src="script.js"></script>
 </body>
 </html>
-
-<!-- ===== CONTACT SECTION ===== -->
-<section id="contact" class="py-20 px-6 bg-gray-100">
-  <h2 class="text-3xl font-bold text-center mb-12">Get In Touch</h2>
-
-  <div class="max-w-xl mx-auto">
-    <form id="contactForm" class="space-y-6 bg-white p-8 rounded-xl shadow-lg">
-      <!-- NAME -->
-      <div>
-        <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
-        <input 
-          type="text" 
-          id="name" 
-          name="name" 
-          placeholder="Your full name" 
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      <!-- EMAIL -->
-      <div>
-        <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email" 
-          placeholder="you@example.com" 
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      <!-- MESSAGE -->
-      <div>
-        <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
-        <textarea 
-          id="message" 
-          name="message" 
-          rows="5" 
-          placeholder="Your message..." 
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        ></textarea>
-      </div>
-
-      <!-- SUBMIT BUTTON -->
-      <button 
-        type="submit" 
-        class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg shadow-lg hover:bg-blue-700 transition"
-      >
-        Send Message
-      </button>
-    </form>
-  </div>
-</section>

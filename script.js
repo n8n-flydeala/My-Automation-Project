@@ -30,19 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(card);
     });
 
-    // 3. CHAT UI LOGIC (PINAGSAMA NA NATIN)
+    // 3. CUSTOM CHAT UI LOGIC
     const chatContainer = document.getElementById('chat-container');
     const closeBtn = document.getElementById('close-chat');
     const sendBtn = document.getElementById('send-btn');
     const userInput = document.getElementById('user-input');
     const chatMessages = document.getElementById('chat-messages');
-    
-    // Ito yung selector para sa "Ask My AI" button mo
-    const askBtn = document.querySelector('.lux-float-btn') || document.querySelector('button.fixed.bottom-10');
+    const askBtn = document.querySelector('.lux-float-btn');
 
+    // Open/Close Chat
     if (askBtn && chatContainer) {
         askBtn.addEventListener('click', () => {
-            console.log("Chat Opened! ✦");
             chatContainer.classList.toggle('hidden');
         });
     }
@@ -53,26 +51,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. SEND MESSAGE LOGIC
+    // 4. SEND MESSAGE TO n8n
     if (sendBtn) {
-        sendBtn.addEventListener('click', () => {
+        sendBtn.addEventListener('click', async () => {
             const message = userInput.value.trim();
             if (message) {
                 appendMessage('User', message);
                 userInput.value = '';
-                
-                // Temporary AI Thinking state
-                setTimeout(() => {
-                    appendMessage('AI', 'Thinking... (n8n connection soon!)');
-                }, 500);
+
+                try {
+                    // Pakisiguro na naka-PUBLISH ang workflow sa n8n
+                    const response = await fetch('https://flydeala.app.n8n.cloud/webhook/a58fc3ea-6870-4637-bb60-8b979d29e583/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chatInput: message }) 
+                    });
+
+                    if (!response.ok) throw new Error('Network response was not ok');
+
+                    const data = await response.json();
+                    
+                    // n8n returns 'output' for the Chat Trigger response
+                    if (data.output) {
+                        appendMessage('AI', data.output);
+                    } else {
+                        appendMessage('AI', "I received the message but the brain didn't reply. Check n8n logs!");
+                    }
+
+                } catch (err) {
+                    console.error("n8n Error:", err);
+                    appendMessage('AI', 'Error connecting to brain. Check if n8n is Active/Published!');
+                }
             }
         });
     }
 
+    // Helper function to show messages
     function appendMessage(sender, text) {
         const msgDiv = document.createElement('div');
-        // Ginamit natin yung class na ginawa natin sa CSS kanina
-        msgDiv.className = sender === 'User' ? 'chat-bubble-user p-2 mb-2 ml-auto max-w-[80%]' : 'chat-bubble-ai p-2 mb-2 mr-auto max-w-[80%]';
+        msgDiv.className = sender === 'User' ? 
+            'bg-gold/20 p-2 mb-2 ml-auto max-w-[80%] rounded-lg text-right' : 
+            'bg-gray-800 p-2 mb-2 mr-auto max-w-[80%] rounded-lg';
+        
         msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
         chatMessages.appendChild(msgDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -90,33 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             try {
-                // Palitan mo 'to ng n8n Webhook URL mo soon
-                await fetch("YOUR_WEBHOOK_URL", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                });
-                alert("Message sent successfully ✦");
+                // Pwede mo rin i-connect ito sa ibang n8n webhook soon
+                console.log("Form data collected:", data);
+                alert("Message sent successfully ✦ (Make sure to connect your Form Webhook too!)");
                 form.reset();
             } catch (err) {
-                alert("Naka-test mode pa tayo, G! Connect muna natin n8n.");
+                alert("Error sending message.");
                 console.error(err);
             }
         });
     }
 });
-
-async function askCendrickAI(userQuestion) {
-    const response = await fetch('https://flydeala.app.n8n.cloud/webhook/ask-ai', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            question: userQuestion
-        }),
-    });
-
-    const data = await response.json();
-    return data.output; // Ito yung sagot ni Groq
-}

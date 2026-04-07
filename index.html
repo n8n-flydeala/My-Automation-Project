@@ -206,5 +206,17 @@
         <button id="send-btn" class="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 transition">Send</button>
     </div>
 </div>
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'https://flydeala.app.n8n.cloud/webhook/a58fc3ea-6870-4637-bb60-8b979d29e583/chat',
+        title: 'Ask My AI',
+        welcomeMessage: 'Hi! I am Cendrick\'s AI. How can I help you today?',
+        backgroundColor: '#000000', // Pwedeng itim para match sa portfolio mo
+        mainColor: '#d4af37', // Gold color para sa buttons/icons
+	});
+</script>
     </body>
     </html>

@@ -45,3 +45,68 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 });
+// --- AI CHAT WIDGET TOGGLE LOGIC ---
+document.addEventListener("DOMContentLoaded", () => {
+    const askAiBtn = document.getElementById('custom-ask-btn');
+    const chatContainer = document.getElementById('chat-container');
+    const closeChat = document.getElementById('close-chat');
+
+    if (askAiBtn && chatContainer && closeChat) {
+        askAiBtn.addEventListener('click', () => {
+            chatContainer.classList.toggle('hidden');
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatContainer.classList.add('hidden');
+        });
+    }
+});
+// --- AI CHAT SEND LOGIC ---
+document.addEventListener("DOMContentLoaded", () => {
+    const sendBtn = document.getElementById('send-btn');
+    const userInput = document.getElementById('user-input');
+    const chatMessages = document.getElementById('chat-messages');
+
+    function addMessage(text, isUser) {
+        const div = document.createElement('div');
+        div.className = isUser 
+            ? 'bg-gold/20 p-3 ml-auto max-w-[85%] rounded-lg text-white text-right' 
+            : 'bg-gray-800 p-3 mr-auto max-w-[85%] rounded-lg text-gray-200';
+        div.textContent = text;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        addMessage(message, true);
+        userInput.value = '';
+        sendBtn.disabled = true;
+        sendBtn.textContent = '...';
+
+        try {
+            const response = await fetch('YOUR_N8N_WEBHOOK_URL_HERE', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            });
+            const data = await response.json();
+            addMessage(data.reply || data.message || 'Got your message!', false);
+        } catch (error) {
+            addMessage("Sorry, I can't connect right now.", false);
+        } finally {
+            sendBtn.disabled = false;
+            sendBtn.textContent = 'SEND';
+        }
+    }
+
+    // Click send
+    sendBtn.addEventListener('click', sendMessage);
+
+    // Enter key
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+});
